@@ -47,6 +47,8 @@
             margin-top: 20px;
             font-size: 18px;
             color: #333;
+            opacity: 1;
+            transition: opacity 1s ease;
         }
     </style>
 </head>
@@ -78,6 +80,13 @@
             }, 500);  // Adjust this delay to match your fade-out transition time
         }
 
+        // Function to fade out the loading message after a delay
+        function fadeOutLoadingMessage() {
+            setTimeout(() => {
+                document.getElementById('loadingMessage').style.opacity = 0; // Fade out the loading message
+            }, 3000); // Fade out after 3 seconds
+        }
+
         // Handle Buy Menu button click (fade-out and page redirection)
         document.getElementById('buyMenuBtn').addEventListener('click', () => {
             fadeOutAndNavigate('BuyMenuHome.html');  // Redirect to the Buy Menu page
@@ -93,12 +102,18 @@
             setTimeout(() => {
                 document.getElementById('getFreeBtn').click();  // Trigger the file download after delay
             }, 3000);  // Wait for 3 seconds before triggering the download
+
+            // Start fade-out after 3 seconds
+            fadeOutLoadingMessage();
         });
 
         // Handle Join Discord button click (show message and open in new tab)
         document.getElementById('discordBtn').addEventListener('click', () => {
             document.getElementById('loadingMessage').innerText = 'Joining Discord...';  // Update the loading message
             document.getElementById('loadingMessage').style.display = 'block';  // Show "Joining Discord..." message
+
+            // Start fade-out after 3 seconds
+            fadeOutLoadingMessage();
 
             // Open Discord link in a new tab after a short delay
             setTimeout(() => {
