@@ -53,25 +53,26 @@
 <body>
     <div class="container">
         <h1>Welcome To Source Ware</h1>
+        <!-- Buy Menu Button -->
         <button class="button" id="buyMenuBtn">Buy Menu</button>
+        <!-- Get Free Button (File Download) -->
         <a href="SourceWareFree.dll" download="SourceWareFree.dll" id="getFreeBtn">
             <button class="button" id="downloadBtn">Get Free</button>
         </a>
+        <!-- Join Discord Button -->
         <button class="button" id="discordBtn">Join The Discord</button>
         <div class="loading" id="loadingMessage">Starting your action...</div>
     </div>
 
     <script>
-        // Function to handle the fade-out transition and navigation/download
-        function fadeOutAndNavigate(link = null, download = false) {
+        // Function to handle the fade-out transition and navigation (no fade-out for downloads)
+        function fadeOutAndNavigate(link = null) {
             document.body.style.opacity = 0;  // Start the fade-out effect
             document.getElementById('loadingMessage').style.display = 'block';  // Show loading message
 
             // Timeout for the fade-out transition before performing the action
             setTimeout(() => {
-                if (download) {
-                    document.getElementById('getFreeBtn').click();  // Trigger the download after fade
-                } else if (link) {
+                if (link) {
                     window.location.href = link;  // Navigate to the new page after fade
                 }
             }, 500);  // Adjust this delay to match your fade-out transition time
@@ -86,7 +87,7 @@
         document.getElementById('downloadBtn').addEventListener('click', (e) => {
             // Prevent immediate download action
             e.preventDefault();
-            fadeOutAndNavigate(null, true);  // Trigger download after fade
+            document.getElementById('getFreeBtn').click();  // Trigger the file download immediately without fade
         });
 
         // Handle Join Discord button click (external link)
