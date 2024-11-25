@@ -65,7 +65,7 @@
     </div>
 
     <script>
-        // Function to handle the fade-out transition and navigation (no fade-out for downloads)
+        // Function to handle the fade-out transition and navigation
         function fadeOutAndNavigate(link = null) {
             document.body.style.opacity = 0;  // Start the fade-out effect
             document.getElementById('loadingMessage').style.display = 'block';  // Show loading message
@@ -78,21 +78,32 @@
             }, 500);  // Adjust this delay to match your fade-out transition time
         }
 
-        // Handle Buy Menu button click (page redirection)
+        // Handle Buy Menu button click (fade-out and page redirection)
         document.getElementById('buyMenuBtn').addEventListener('click', () => {
             fadeOutAndNavigate('BuyMenuHome.html');  // Redirect to the Buy Menu page
         });
 
         // Handle Get Free button (file download)
         document.getElementById('downloadBtn').addEventListener('click', (e) => {
-            // Prevent immediate download action
-            e.preventDefault();
-            document.getElementById('getFreeBtn').click();  // Trigger the file download immediately without fade
+            e.preventDefault();  // Prevent immediate download action
+            document.getElementById('loadingMessage').innerText = 'Downloading...';  // Update the loading message
+            document.getElementById('loadingMessage').style.display = 'block';  // Show "Downloading..." message
+
+            // Simulate the download delay (for 3 seconds), then trigger the download
+            setTimeout(() => {
+                document.getElementById('getFreeBtn').click();  // Trigger the file download after delay
+            }, 3000);  // Wait for 3 seconds before triggering the download
         });
 
-        // Handle Join Discord button click (external link)
+        // Handle Join Discord button click (show message and open in new tab)
         document.getElementById('discordBtn').addEventListener('click', () => {
-            fadeOutAndNavigate('https://discord.gg/ErznZ8sJN9');  // Redirect to Discord invite
+            document.getElementById('loadingMessage').innerText = 'Joining Discord...';  // Update the loading message
+            document.getElementById('loadingMessage').style.display = 'block';  // Show "Joining Discord..." message
+
+            // Open Discord link in a new tab after a short delay
+            setTimeout(() => {
+                window.open('https://discord.gg/ErznZ8sJN9', '_blank');  // Open Discord in a new tab
+            }, 2000);  // Wait for 2 seconds before opening the Discord link
         });
     </script>
 </body>
