@@ -63,10 +63,18 @@
         </a>
         <!-- Join Discord Button -->
         <button class="button" id="discordBtn">Join The Discord</button>
-        <div class="loading" id="loadingMessage">Starting your action...</div>
     </div>
 
+    <!-- Add an audio element for the click sound -->
+    <audio id="clickSound" src="button-sound.mp3" preload="auto"></audio>
+
     <script>
+        // Function to play the click sound
+        function playClickSound() {
+            const clickSound = document.getElementById('clickSound');
+            clickSound.play();  // Play the sound
+        }
+
         // Function to handle the fade-out transition and navigation
         function fadeOutAndNavigate(link = null) {
             document.body.style.opacity = 0;  // Start the fade-out effect
@@ -89,12 +97,14 @@
 
         // Handle Buy Menu button click (fade-out and page redirection)
         document.getElementById('buyMenuBtn').addEventListener('click', () => {
+            playClickSound();  // Play the click sound
             fadeOutAndNavigate('BuyMenuHome.html');  // Redirect to the Buy Menu page
         });
 
         // Handle Get Free button (file download)
         document.getElementById('downloadBtn').addEventListener('click', (e) => {
             e.preventDefault();  // Prevent immediate download action
+            playClickSound();  // Play the click sound
             document.getElementById('loadingMessage').innerText = 'Downloading...';  // Update the loading message
             document.getElementById('loadingMessage').style.display = 'block';  // Show "Downloading..." message
 
@@ -109,6 +119,7 @@
 
         // Handle Join Discord button click (show message and open in new tab)
         document.getElementById('discordBtn').addEventListener('click', () => {
+            playClickSound();  // Play the click sound
             document.getElementById('loadingMessage').innerText = 'Joining Discord...';  // Update the loading message
             document.getElementById('loadingMessage').style.display = 'block';  // Show "Joining Discord..." message
 
