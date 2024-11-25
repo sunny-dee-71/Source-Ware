@@ -13,6 +13,7 @@
             height: 100vh;
             background-color: #f4f4f9;
             margin: 0;
+            transition: opacity 0.5s ease;
         }
         .container {
             text-align: center;
@@ -41,16 +42,36 @@
         .button:focus {
             outline: none;
         }
+        .loading {
+            display: none;
+            margin-top: 20px;
+            font-size: 18px;
+            color: #333;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>Welcome To Source Ware</h1>
-        <button class="button" onclick="window.location.href='BuyMenuHome.html'">Buy Menu</button>
-        <a href="SourceWareFree.dll" download="SourceWareFree.dll">
+        <!-- Buy Menu Button -->
+        <button class="button" id="buyMenuBtn">Buy Menu</button>
+        <!-- Get Free Button (File Download) -->
+        <a href="SourceWareFree.dll" download="SourceWareFree.dll" id="getFreeBtn">
             <button class="button">Get Free</button>
         </a>
-        <button class="button" onclick="window.location.href='https://discord.gg/ErznZ8sJN9'">Join The Discord</button>
+        <!-- Join Discord Button -->
+        <button class="button" id="discordBtn">Join The Discord</button>
+        <div class="loading" id="loadingMessage">Starting your action...</div>
     </div>
-</body>
-</html>
+
+    <script>
+        // Function to handle the fade-out transition
+        function fadeOutAndNavigate(link = null) {
+            document.body.style.opacity = 0;  // Start the fade-out effect
+            document.getElementById('loadingMessage').style.display = 'block';  // Show loading message
+
+            setTimeout(() => {
+                if (link) {
+                    window.location.href = link;  // Navigate to the new link after the fade
+                }
+            }, 500);  // 
