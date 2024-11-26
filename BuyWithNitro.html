@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Send Embed</title>
+</head>
+<body>
+    <h1>Send an Embed with a Message</h1>
+    <form id="embedForm">
+        <label for="messageContent">Message Content:</label><br>
+        <textarea id="messageContent" placeholder="Enter your message" required></textarea><br><br>
+
+        <label for="embedTitle">Embed Title:</label><br>
+        <input type="text" id="embedTitle" placeholder="Enter embed title" required><br><br>
+
+        <label for="embedDescription">Embed Description:</label><br>
+        <textarea id="embedDescription" placeholder="Enter embed description" required></textarea><br><br>
+
+        <button type="submit">Send Embed</button>
+    </form>
+
+    <script>
+        document.getElementById('embedForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const webhookUrl = "https://discord.com/api/webhooks/1311057682022797434/om54aFEYSM4VYlmMXh1VsipdCTZk4Ka-6FMWoiDGizrzscc1_D5pY8H34re_AYKKjb43";
+            const messageContent = document.getElementById('messageContent').value;
+            const embedTitle = document.getElementById('embedTitle').value;
+            const embedDescription = document.getElementById('embedDescription').value;
+
+            const payload = {
+                content: messageContent,
+                embeds: [{
+                    title: embedTitle,
+                    description: embedDescription,
+                    color: 3447003 // Blue color in decimal (optional)
+                }]
+            };
+
+            try {
+                const response = await fetch(webhookUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(payload)
+                });
+
+                if (response.ok) {
+                    alert('Embed sent successfully!');
+                } else {
+                    alert('Failed to send embed. Check the webhook URL or content.');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('An error occurred while sending the embed.');
+            }
+        });
+    </script>
+</body>
+</html>
