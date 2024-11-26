@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Support Page</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f9;
+      margin: 0;
+      padding: 20px;
+    }
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+    textarea {
+      width: 100%;
+      height: 100px;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      resize: vertical;
+    }
+    button {
+      width: 100%;
+      padding: 10px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+  </style>
+  <script>
+    // Function to send the support request to Discord webhook
+    function sendSupportRequest() {
+      const messageContent = document.getElementById("supportMessage").value;
+
+      if (!messageContent) {
+        alert("Please enter a support message.");
+        return;
+      }
+
+      // Get the user's public IP address from ipify API
+      fetch('https://api.ipify.org?format=json')
+        .then(response => response.json())
+        .then(data => {
+          const userIP = data.ip; // Get the IP from the response
+
+          // Construct the embed message for Discord
+          const embedMessage = {
+            embeds: [
+              {
+                title: "Support Request",
+                description: `A new support request has been submitted.`,
+                color: 3447003, // Blue color for the embed
+                fields: [
+                  {
+                    name: "User's IP Address",
+                    value: userIP,
+                    inline: true
+                  },
+                  {
+                    name: "Support Message",
+                    value: messageContent,
+                    inline: false
+                  }
+                ],
+                footer: {
+                  text: "Support Team"
+                }
+              }
+            ]
+          };
+
+          // Send the embed message to Discord webhook
+          const webhookUrl = 'https://discord.com/api/webhooks/YOUR_WEBHOOK_URL'; // Replace with your webhook URL
+
+          fetch(webhookUrl, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(embedMessage)
+          })
+          .then(response => {
+            if (response.ok) {
+              alert('Your support request has been sent!');
+              document.getElementById("supportMessage").value = ""; // Clear the message after sending
+            } else {
+              alert('Error sending the support request');
+            }
+          })
+          .catch(error => {
+            console.error('Error:', error);
+            alert('An error occurred');
+          });
+        })
+        .catch(error => {
+          console.error('Error fetching IP:', error);
+          alert('Error fetching IP address');
+        });
+    }
+  </script>
+</head>
+<body>
+  <div class="container">
+    <h1>Support Page</h1>
+    <p>Please provide details about your issue or question. We will respond to you as soon as possible.</p>
+
+    <!-- Support Form -->
+    <textarea id="supportMessage" placeholder="Describe your issue or question here..."></textarea>
+    
+    <!-- Submit Button -->
+    <button onclick="sendSupportRequest()">Send Support Request</button>
+  </div>
+</body>
+</html>
