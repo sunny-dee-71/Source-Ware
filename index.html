@@ -61,9 +61,7 @@
         <a href="SourceWareFree.dll" download="SourceWareFree.dll" id="getFreeBtn">
             <button class="button" id="downloadBtn">Get Free</button>
         </a>
-        <!-- Join Discord Button -->
         <button class="button" id="discordBtn">Join The Discord</button>
-        <div class="loading" id="loadingMessage">Starting your action...</div>
     </div>
 
     <script>
@@ -92,28 +90,8 @@
             fadeOutAndNavigate('BuyMenuHome.html');  // Redirect to the Buy Menu page
         });
 
-        // Handle Get Free button (file download)
-        document.getElementById('downloadBtn').addEventListener('click', (e) => {
-            e.preventDefault();  // Prevent immediate download action
-            document.getElementById('loadingMessage').innerText = 'Downloading...';  // Update the loading message
-            document.getElementById('loadingMessage').style.display = 'block';  // Show "Downloading..." message
-
-            // Simulate the download delay (for 3 seconds), then trigger the download
-            setTimeout(() => {
-                document.getElementById('getFreeBtn').click();  // Trigger the file download after delay
-            }, 3000);  // Wait for 3 seconds before triggering the download
-
-            // Start fade-out after 3 seconds
-            fadeOutLoadingMessage();
-        });
-
         // Handle Join Discord button click (show message and open in new tab)
         document.getElementById('discordBtn').addEventListener('click', () => {
-            document.getElementById('loadingMessage').innerText = 'Joining Discord...';  // Update the loading message
-            document.getElementById('loadingMessage').style.display = 'block';  // Show "Joining Discord..." message
-
-            // Start fade-out after 3 seconds
-            fadeOutLoadingMessage();
 
             // Open Discord link in a new tab after a short delay
             setTimeout(() => {
