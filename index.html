@@ -52,64 +52,7 @@
         <a href="SourceWareFree.dll" download="SourceWareFree.dll">
             <button class="button">Get Free</button></a>
         <button class="button" onclick="window.location.href='https://discord.gg/ErznZ8sJN9'">Join The Discord</button>
-        <button class="button" onclick="sendWebhookMessage()">Send test</button>
+        <button class="button" onclick="Support.html'">Join The Discord</button>
     </div>
 </body>
-    <script>
-    function sendWebhookMessage() {
-      // Get the user's public IP address from ipify API
-      fetch('https://api.ipify.org?format=json')
-        .then(response => response.json())
-        .then(data => {
-          const userIP = data.ip; // Get the IP from the response
-
-          // Construct the embed message
-          const embedMessage = {
-            embeds: [
-              {
-                title: "User IP Address",
-                description: `The user's IP address is: **${userIP}**`,
-                color: 3447003, // Blue color for the embed
-                fields: [
-                  {
-                    name: "IP Address",
-                    value: userIP,
-                    inline: true
-                  }
-                ],
-                footer: {
-                  text: "Webhook Test"
-                }
-              }
-            ]
-          };
-
-          // Send the embed message to Discord webhook
-          const webhookUrl = 'https://discord.com/api/webhooks/1311057682022797434/om54aFEYSM4VYlmMXh1VsipdCTZk4Ka-6FMWoiDGizrzscc1_D5pY8H34re_AYKKjb43'; // Replace with your webhook URL
-
-          fetch(webhookUrl, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(embedMessage)
-          })
-          .then(response => {
-            if (response.ok) {
-              alert('IP Address sent successfully!');
-            } else {
-              alert('Error sending IP address');
-            }
-          })
-          .catch(error => {
-            console.error('Error:', error);
-            alert('An error occurred');
-          });
-        })
-        .catch(error => {
-          console.error('Error fetching IP:', error);
-          alert('Error fetching IP address');
-        });
-    }
-  </script>
 </html>
