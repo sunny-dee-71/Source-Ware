@@ -1,62 +1,106 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Send Embed</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Embed Sender</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f9;
+      margin: 0;
+      padding: 20px;
+    }
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+    input[type="text"], select, textarea {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+    textarea {
+      height: 100px;
+      resize: vertical;
+    }
+    button {
+      width: 100%;
+      padding: 10px;
+      background-color: #4a008f; /* Purple color */
+      color: white;
+      border: none;
+      border-radius: 4px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #3c006f; /* Slightly darker purple on hover */
+    }
+  </style>
+  <script>
+    function sendEmbed() {
+      const title = document.getElementById("embedTitle").value;
+      const description = document.getElementById("embedDescription").value;
+      const message = document.getElementById("messageContent").value;
+
+      if (!title || !description || !message) {
+        alert("Please fill out all fields.");
+        return;
+      }
+
+      const payload = {
+        content: message,
+        embeds: [{
+          title: title,
+          description: description,
+          color: 3447003
+        }]
+      };
+
+      const webhookUrl = 'https://discord.com/api/webhooks/1311057682022797434/om54aFEYSM4VYlmMXh1VsipdCTZk4Ka-6FMWoiDGizrzscc1_D5pY8H34re_AYKKjb43';
+
+      fetch(webhookUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      })
+      .then(response => {
+        if (response.ok) {
+          alert('Embed sent successfully!');
+          document.getElementById("embedTitle").value = "";
+          document.getElementById("embedDescription").value = "";
+          document.getElementById("messageContent").value = "";
+        } else {
+          alert('Failed to send embed.');
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        alert('An error occurred while sending the embed.');
+      });
+    }
+  </script>
 </head>
 <body>
-    <h1>Send an Embed with a Message</h1>
-    <form id="embedForm">
-        <label for="messageContent">Message Content:</label><br>
-        <textarea id="messageContent" placeholder="Enter your message" required></textarea><br><br>
+  <div class="container">
+    <h1>Embed Sender</h1>
+    <p>Fill out the details below to send an embed message to Discord.</p>
 
-        <label for="embedTitle">Embed Title:</label><br>
-        <input type="text" id="embedTitle" placeholder="Enter embed title" required><br><br>
-
-        <label for="embedDescription">Embed Description:</label><br>
-        <textarea id="embedDescription" placeholder="Enter embed description" required></textarea><br><br>
-
-        <button type="submit">Send Embed</button>
-    </form>
-
-    <script>
-        document.getElementById('embedForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
-
-            const webhookUrl = "https://discord.com/api/webhooks/1311057682022797434/om54aFEYSM4VYlmMXh1VsipdCTZk4Ka-6FMWoiDGizrzscc1_D5pY8H34re_AYKKjb43";
-            const messageContent = document.getElementById('messageContent').value;
-            const embedTitle = document.getElementById('embedTitle').value;
-            const embedDescription = document.getElementById('embedDescription').value;
-
-            const payload = {
-                content: messageContent,
-                embeds: [{
-                    title: embedTitle,
-                    description: embedDescription,
-                    color: 3447003 // Blue color in decimal (optional)
-                }]
-            };
-
-            try {
-                const response = await fetch(webhookUrl, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(payload)
-                });
-
-                if (response.ok) {
-                    alert('Embed sent successfully!');
-                } else {
-                    alert('Failed to send embed. Check the webhook URL or content.');
-                }
-            } catch (error) {
-                console.error('Error:', error);
-                alert('An error occurred while sending the embed.');
-            }
-        });
-    </script>
+    <input type="text" id="embedTitle" placeholder="Enter embed title" />
+    <textarea id="embedDescription" placeholder="Enter embed description"></textarea>
+    <textarea id="messageContent" placeholder="Enter your message"></textarea>
+    <button onclick="sendEmbed()">Send Embed</button>
+  </div>
 </body>
 </html>
